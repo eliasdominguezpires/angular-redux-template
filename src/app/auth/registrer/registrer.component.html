@@ -66,10 +66,11 @@
             <div class="form-group">
               <button
                 type="submit"
-                [disabled] = "!registerForm.valid"
+                [disabled] = "!registerForm.valid || loading"
                 class="btn btn-primary submit-btn btn-block"
               >
-                Crear cuenta
+                Crear cuenta&nbsp;&nbsp;
+                <i *ngIf="loading" class="fa fa-spin fa-sync"></i>
               </button>
             </div>
             <div class="text-block text-center my-3">

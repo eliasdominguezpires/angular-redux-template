@@ -1,21 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { Subscription } from 'rxjs';
+
 import { AuthService } from 'src/app/services/auth.service';
+
 import Swal from 'sweetalert2';
+import { isLoading, stopLoading } from 'src/app/shared/ui.actions';
 
 @Component({
   selector: 'app-registrer',
   templateUrl: './registrer.component.html',
 })
-export class RegistrerComponent implements OnInit {
+export class RegistrerComponent implements OnInit, OnDestroy {
 
   registerForm: FormGroup;
+  loading: boolean = false;
+  uiSubsription: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {
 
     this.registerForm = this.fb.group({
@@ -35,31 +45,42 @@ export class RegistrerComponent implements OnInit {
         ],
       ],
     });
+
+    this.uiSubsription = this.store.select('ui')
+      .subscribe(ui => this.loading = ui.isLoading)
   }
 
   ngOnInit(): void {
 
+  }
 
+  ngOnDestroy(): void {
+    this.uiSubsription.unsubscribe();
   }
 
   createUser() {
     if (this.registerForm.invalid) { return };
 
-    Swal.fire({
+    this.store.dispatch(isLoading());
+
+    /*Swal.fire({
       title: 'Espere por favor',
       didOpen: () => {
         Swal.showLoading()
       },
-    })
+    })*/
 
     const { name, email, password } = this.registerForm.value;
 
     this.authService.createUser(name, email, password)
       .then(credenciales => {
         console.log(credenciales);
-        Swal.close();
+        //Swal.close();
+        this.store.dispatch(stopLoading());
+
         this.router.navigate(['/']);
       }).catch(err => {
+        this.store.dispatch(stopLoading());
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
