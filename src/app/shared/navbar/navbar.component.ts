@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { AppState } from 'src/app/app.reducer';
 
 @Component({
   selector: 'app-navbar',
@@ -7,14 +10,27 @@ import { AuthService } from 'src/app/services/auth.service';
   styles: [
   ]
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
 
-  userLogin: string;
+  userLogin: string = '';
+  userLoginSubscription: Subscription;
 
-  constructor(public authService: AuthService) {
-    this.userLogin = 'elias';
+  constructor(
+    private store: Store<AppState>,
+  ) {
+    this.userLoginSubscription = this.store.select('user').pipe(
+      filter(({ user }) => user != null)
+    )
+      .subscribe(({ user }) => {
+        if (user)
+          this.userLogin = user?.email;
+      })
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.userLoginSubscription.unsubscribe();
   }
 }

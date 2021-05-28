@@ -7,6 +7,7 @@
         <table class="table">
           <thead>
             <tr>
+              <th>UID</th>
               <th>Descripción</th>
               <th>Monto</th>
               <th>Tipo</th>
@@ -15,13 +16,35 @@
           </thead>
 
           <tbody>
+            <tr *ngFor="let item of ingresosEgresos | ordenIngreso">
+              <td>{{ item.uid }}</td>
+              <td>{{ item.descripcion }}</td>
+              <td>{{ item.monto | currency }}</td>
+              <td
+                [class.text-success]="item.tipo === 'ingreso'"
+                [class.text-danger]="item.tipo === 'egreso'"
+              >
+                {{ item.tipo }}
+              </td>
+              <td>
+                <button
+                  class="btn btn-outline-danger btn-sm"
+                  (click)="borrar(item.uid)"
+                >
+                  <i class="fa fa-trash">&nbsp;&nbsp;Borrar</i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
             <tr>
+              <th>UID</th>
               <td>Descripción</td>
               <td>Monto</td>
               <td>Tipo</td>
               <td>acciones</td>
             </tr>
-          </tbody>
+          </tfoot>
         </table>
       </div>
     </div>
