@@ -33,7 +33,7 @@ export class EstadisticaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  generatEstatistics(items: IngresoEgreso) {
+  generatEstatistics(items: IngresoEgreso[]) {
     this.ingresos = 0;
     this.totalIngresos = 0;
     this.egresos = 0;
