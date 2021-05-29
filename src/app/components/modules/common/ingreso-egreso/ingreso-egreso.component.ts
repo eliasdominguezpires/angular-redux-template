@@ -1,12 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
 import { Subscription } from 'rxjs';
+import { isLoading, stopLoading } from 'src/app/shared/ui.actions';
+
+import { ComunServicesService } from 'src/app/services/comun-services.service';
+import { IngresoEgreso } from 'src/app/models/ingreso-egreso.model';
+
 import Swal from 'sweetalert2';
-import { AppState } from '../app.reducer';
-import { IngresoEgreso } from '../models/ingreso-egreso.model';
-import { ComunServicesService } from '../services/comun-services.service';
-import { isLoading, stopLoading } from '../shared/ui.actions';
 
 @Component({
   selector: 'app-ingreso-egreso',

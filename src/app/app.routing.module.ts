@@ -2,8 +2,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { LoginComponent } from "./auth/login/login.component";
 import { RegistrerComponent } from "./auth/registrer/registrer.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
-import { dashboardRoutes } from "./dashboard/dashboard.routes";
 import { AuthGuard } from "./services/auth.guard";
 
 const routes: Routes = [
@@ -11,9 +9,9 @@ const routes: Routes = [
   { path: 'register', component: RegistrerComponent },
   {
     path: '',
-    component: DashboardComponent,
-    children: dashboardRoutes,
-    canActivate: [AuthGuard]
+    canLoad: [AuthGuard],
+    loadChildren: () => import('./components/modules/modules.module')
+      .then(module => module.ModulesModule)
   },
   { path: '**', redirectTo: '' },
 ]

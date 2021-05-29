@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
-import { setItems } from '../ingreso-egreso/ingreso-egreso.actions';
+import { setItems } from '../components/modules/common/ingreso-egreso/ingreso-egreso.actions';
 
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -46,8 +46,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.itemsSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
+    this.itemsSubscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
   }
 
 }

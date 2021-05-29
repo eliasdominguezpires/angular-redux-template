@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
+//import { AppState } from 'src/app/app.reducer';
+import { AppStateWithModule } from '../ingreso-egreso.reducer';
+
 import { IngresoEgreso } from 'src/app/models/ingreso-egreso.model';
 
 import { MultiDataSet, Label } from 'ng2-charts';
@@ -24,7 +26,7 @@ export class EstadisticaComponent implements OnInit {
   public doughnutChartData: MultiDataSet = [[0, 0]];
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppStateWithModule> //Store<AppState>
   ) {
     this.store.select('ingresosEgresos')
       .subscribe(({ items }) => this.generatEstatistics(items))

@@ -6,7 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { setUser, unSetUser } from '../auth/auth.actions';
-import { unSetItems } from '../ingreso-egreso/ingreso-egreso.actions';
+import { unSetItems } from '../components/modules/common/ingreso-egreso/ingreso-egreso.actions';
 
 import { map } from 'rxjs/operators';
 
@@ -48,7 +48,7 @@ export class AuthService {
 
       } else {
         this._user = null;
-        this.userSubscription.unsubscribe();
+        this.userSubscription?.unsubscribe();
         this.store.dispatch(unSetUser());
         this.store.dispatch(unSetItems());
       }

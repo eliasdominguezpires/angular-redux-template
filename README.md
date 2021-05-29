@@ -62,3 +62,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## NG CHARTS 
   `npm install chart.js@2.9.3 --save`
   `npm install ng2-charts@2.2.3 --save`
+## NGRX con Lazyload
+  `https://angular.io/guide/lazy-loading-ngmodules`
